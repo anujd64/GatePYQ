@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model accounts {
+  id                String @id @default(auto()) @map("_id") @db.ObjectId
+  access_token      String
+  expires_at        Int
+  id_token          String
+  provider          String
+  providerAccountId String
+  scope             String
+  token_type        String
+  type              String
+  userId            String 
+}
+
+model questions {
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  v                Int      @map("__v")
+  correct_options  String[]
+  explanation_link String
+  image_links      String[]
+  options          String[]
+  question         String
+  tags             String[]
+}
+
+model tags {
+  id    String @id @map("_id")
+  count Int
+}
+
+model users {
+  id            String  @id @default(auto()) @map("_id") @db.ObjectId
+  email         String
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  emailVerified Boolean?
+  image         String?
+  name          String?
+  hashedPassword      String?
+  username      String?
+}
